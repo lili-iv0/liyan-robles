@@ -22,7 +22,6 @@ export default function App() {
   return (
     <GameProvider>
       <ScrollToTop />
-      <a className="skip" href="#main">Skip to content</a>
       <Navbar />
       <main id="main">
         <Routes>

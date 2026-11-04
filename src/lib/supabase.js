@@ -38,3 +38,4 @@ export function siteImageUrl(path) {
   if (!supabase) return '';
   return supabase.storage.from(SITE_BUCKET).getPublicUrl(path).data.publicUrl;
 }
+

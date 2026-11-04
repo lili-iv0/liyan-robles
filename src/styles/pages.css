@@ -333,5 +333,8 @@
 .flip-face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .flip-back { transform: rotateY(180deg); }
 .flip.is-flipped .flip-inner { transform: rotateY(180deg); }
-@media (hover: hover) { .flip:hover .flip-inner { transform: rotateY(180deg); } .flip.is-flipped:hover .flip-inner { transform: rotateY(0deg); } }
+@media (hover: hover) {
+  .flip:hover .flip-inner { transform: rotateY(180deg); }
+  .flip.is-flipped:hover .flip-inner { transform: rotateY(0deg); }
+}
 .flip:focus-visible { outline: 3px dashed var(--accent); outline-offset: 8px; }

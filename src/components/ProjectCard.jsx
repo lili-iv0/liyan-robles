@@ -31,7 +31,9 @@ export default function ProjectCard({ project, index = 0, onOpen }) {
 
       <div className="project-body">
         <h3>
-          <button type="button" className="title-btn" onClick={() => onOpen?.(project)}>{title}</button>
+          <button type="button" className="title-btn" onClick={() => onOpen?.(project)}>
+            {title}
+          </button>
         </h3>
         <p className="muted">{description}</p>
 

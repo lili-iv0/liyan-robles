@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CodePanel from '../components/CodePanel';
 import ProjectCard from '../components/ProjectCard';
+import ProjectModal from '../components/ProjectModal';
 import PixelSprite from '../components/PixelSprite';
 import Scene from '../components/Scene';
 import SectionTitle from '../components/SectionTitle';
@@ -12,6 +14,7 @@ const questIcons = ['sword', 'star', 'flag'];
 
 export default function Home() {
   usePageTitle();
+  const [open, setOpen] = useState(null);
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   const shown = featured.length ? featured : projects.slice(0, 3);
   const availability = profile.now.find((n) => n.open);
@@ -75,10 +78,12 @@ export default function Home() {
 
         <div className="project-grid">
           {shown.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
+            <ProjectCard key={p.id} project={p} index={i} onOpen={setOpen} />
           ))}
         </div>
       </section>
+
+      {open && <ProjectModal project={open} onClose={() => setOpen(null)} />}
     </>
   );
 }

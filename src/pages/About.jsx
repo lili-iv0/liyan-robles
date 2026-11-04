@@ -1,4 +1,5 @@
 import SectionTitle from '../components/SectionTitle';
+import FlipAvatar from '../components/FlipAvatar';
 import usePageTitle from '../hooks/usePageTitle';
 import profile from '../data/profile';
 import { avatar } from '../data/sprites';
@@ -22,7 +23,7 @@ export default function About() {
           )}
         </div>
         <div className="about-avatar">
-          <img src={avatar.src} alt={`ID card of ${profile.name}`} className="avatar-img" />
+          <FlipAvatar front={avatar.src} alt={`ID card of ${profile.name}`} />
           <span className="avatar-shadow" aria-hidden="true" />
         </div>
       </div>

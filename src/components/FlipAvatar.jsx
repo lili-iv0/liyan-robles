@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { siteImageUrl } from '../lib/supabase';
 
-// Where the second picture can live, first match wins:
-//   1. Supabase Storage:  site-images/about-hover.png
-//   2. Local file:        public/about-hover.png
-const candidates = () => [siteImageUrl('site-images/about-hover.png'), 'site-images/about-hover.png'].filter(Boolean);
+const names = ['about-hover.png', 'about-hover.jpg', 'about-hover.jpeg', 'about-hover.webp'];
+const candidates = () => names.flatMap((n) => [siteImageUrl(n), `/${n}`]).filter(Boolean);
 
 function firstThatLoads(urls) {
   return new Promise((resolve) => {
@@ -25,7 +23,10 @@ export default function FlipAvatar({ front, alt }) {
 
   useEffect(() => {
     let live = true;
-    firstThatLoads(candidates()).then((url) => live && setBack(url));
+    firstThatLoads(candidates()).then((url) => {
+      console.log('About hover picture:', url || 'NOT FOUND');
+      if (live) setBack(url);
+    });
     return () => { live = false; };
   }, []);
 
