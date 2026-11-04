@@ -22,7 +22,7 @@ const projects = [
   },
   {
     id: 'alab-ready',
-    role: 'UI/UX | Full-stack Developer | QA Tester',
+    role: 'UI/UX | Full-stack Developer',
     details:
       'An interactive disaster preparedness platform featuring five modules on earthquakes, common accidents, storm surges, and fire, with pre-tests, interactive lessons, quick checks, educational minigames, scenario-based post-tests, AI-generated summaries, teacher analytics, and collaborative module creation.',
     title: 'Alab Ready',
