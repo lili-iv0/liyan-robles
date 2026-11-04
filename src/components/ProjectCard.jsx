@@ -7,24 +7,32 @@ function initials(title) {
     .toUpperCase();
 }
 
-export default function ProjectCard({ project, index = 0 }) {
+export default function ProjectCard({ project, index = 0, onOpen }) {
   const { title, description, image, tags = [], github, demo, website } = project;
 
   return (
     <article className="project">
-      <div className="thumb">
+      <button
+        type="button"
+        className="thumb thumb-btn"
+        onClick={() => onOpen?.(project)}
+        aria-label={`View ${title} screenshots`}
+      >
+        <span className="thumb-view" aria-hidden="true">View</span>
         <span className="stage-tag">Stage {String(index + 1).padStart(2, '0')}</span>
         {image ? (
           <img src={image} alt={`Screenshot of ${title}`} loading="lazy" />
         ) : (
-          <div className={`thumb-ph tone-${(index % 4) + 1}`} aria-hidden="true">
+          <span className={`thumb-ph tone-${(index % 4) + 1}`} aria-hidden="true">
             <span>{initials(title)}</span>
-          </div>
+          </span>
         )}
-      </div>
+      </button>
 
       <div className="project-body">
-        <h3>{title}</h3>
+        <h3>
+          <button type="button" className="title-btn" onClick={() => onOpen?.(project)}>{title}</button>
+        </h3>
         <p className="muted">{description}</p>
 
         <ul className="tag-list" aria-label="Tech stack">

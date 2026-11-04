@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
+import ProjectModal from '../components/ProjectModal';
 import SectionTitle from '../components/SectionTitle';
 import usePageTitle from '../hooks/usePageTitle';
 import projects from '../data/projects';
@@ -7,6 +8,7 @@ import projects from '../data/projects';
 export default function Projects() {
   usePageTitle('Projects');
   const [active, setActive] = useState('All');
+  const [open, setOpen] = useState(null);
 
   const tags = useMemo(() => ['All', ...new Set(projects.flatMap((p) => p.tags))], []);
   const visible = active === 'All' ? projects : projects.filter((p) => p.tags.includes(active));
@@ -34,12 +36,14 @@ export default function Projects() {
       {visible.length ? (
         <div className="project-grid">
           {visible.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
+            <ProjectCard key={p.id} project={p} index={i} onOpen={setOpen} />
           ))}
         </div>
       ) : (
         <p className="empty">No projects use {active} yet. Add one in src/data/projects.js.</p>
       )}
+
+      {open && <ProjectModal project={open} onClose={() => setOpen(null)} />}
     </div>
   );
 }

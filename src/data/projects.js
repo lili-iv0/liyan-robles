@@ -7,6 +7,9 @@ import trackerImg from '../assets/tracker.jpeg';
 const projects = [
   {
     id: 'facility-reservation',
+    role: 'UI/UX | Full-stack Developer',
+    details:
+      'Booking portal for campus rooms and halls with admin approval, a weekly calendar, check-in tracking, and printable slips.',
     title: 'Campus Facility Reservation System',
     description:
       'Booking portal for campus rooms and halls with admin approval, a weekly calendar, check-in tracking, and printable slips.',
@@ -19,6 +22,9 @@ const projects = [
   },
   {
     id: 'alab-ready',
+    role: 'UI/UX | Full-stack Developer | QA Tester',
+    details:
+      'An interactive disaster preparedness platform featuring five modules on earthquakes, common accidents, storm surges, and fire, with pre-tests, interactive lessons, quick checks, educational minigames, scenario-based post-tests, AI-generated summaries, teacher analytics, and collaborative module creation.',
     title: 'Alab Ready',
     description:
       'A gamified disaster preparedness learning platform for Bulacan State University NSTP students, featuring role-based access, XP and badge rewards, and assessment analytics.',
@@ -31,6 +37,7 @@ const projects = [
   },
   {
     id: 'word-bud',
+    role: 'UI/UX | Mobile App Developer',
     title: 'Word Bud',
     description:
       'An Android vocabulary learning app featuring interactive flashcards, quizzes, progress tracking, and achievement badges to make learning fun and engaging.',
@@ -43,6 +50,7 @@ const projects = [
   },
   {
     id: 'raws-game',
+    role: 'Game Designer | Developer',
     title: 'Red Alert: Weeks of Survival',
     description:
       'A top-down survival RPG built in Unity where players prepare for a natural disaster, manage resources, craft tools, and make critical decisions to survive.',
@@ -55,6 +63,7 @@ const projects = [
   },
   {
     id: 'fitness-tracker',
+    role: 'Full-stack Developer',
     title: 'Fitness Tracker',
     description:
       ' A web app for tracking student fitness progress, with progress charts for students and a class dashboard for teachers.',

@@ -1,0 +1,145 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import useProjectImages from '../hooks/useProjectImages';
+
+export default function ProjectModal({ project, onClose }) {
+  const { title, role, description, details, tags = [], github, demo, website } = project;
+  const { images, loading } = useProjectImages(project);
+  const [i, setI] = useState(0);
+  const [dir, setDir] = useState(1);
+  const closeRef = useRef(null);
+  const thumbsRef = useRef(null);
+  const touchX = useRef(null);
+  const n = images.length;
+
+  const go = useCallback(
+    (to) => {
+      if (!n) return;
+      const next = (to + n) % n;
+      setDir(to > i || (i === n - 1 && next === 0) ? 1 : -1);
+      setI(next);
+    },
+    [i, n]
+  );
+
+  // keyboard: arrows to browse, Esc to close, focus stays inside
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      else if (e.key === 'ArrowRight') go(i + 1);
+      else if (e.key === 'ArrowLeft') go(i - 1);
+      else if (e.key === 'Tab') {
+        const els = document.querySelectorAll('.modal [href], .modal button');
+        if (!els.length) return;
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [go, i, onClose]);
+
+  // lock page scroll + restore focus
+  useEffect(() => {
+    const prevFocus = document.activeElement;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      prevFocus?.focus?.();
+    };
+  }, []);
+
+  // keep the active thumbnail in view
+  useEffect(() => {
+    thumbsRef.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [i]);
+
+  // preload neighbours so the slide never flashes empty
+  useEffect(() => {
+    [i + 1, i - 1].forEach((k) => {
+      if (images[(k + n) % n]) new Image().src = images[(k + n) % n].src;
+    });
+  }, [i, images, n]);
+
+  const onTouchStart = (e) => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
+    touchX.current = null;
+  };
+
+  const current = images[i];
+
+  return (
+    <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button ref={closeRef} type="button" className="icon-btn modal-close" onClick={onClose} aria-label="Close project">
+          <span aria-hidden="true">✕</span>
+        </button>
+
+        <div className="gallery">
+          <div className="gallery-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            {current ? (
+              <img
+                key={current.src}
+                className={`gallery-img ${dir > 0 ? 'from-right' : 'from-left'}`}
+                src={current.src}
+                alt={current.alt || `${title} screenshot ${i + 1}`}
+              />
+            ) : (
+              <div className="gallery-empty">{loading ? 'Loading level…' : 'No screenshots yet'}</div>
+            )}
+
+            {n > 1 && (
+              <>
+                <button type="button" className="icon-btn gallery-nav prev" onClick={() => go(i - 1)} aria-label="Previous image">‹</button>
+                <button type="button" className="icon-btn gallery-nav next" onClick={() => go(i + 1)} aria-label="Next image">›</button>
+              </>
+            )}
+            {n > 0 && <span className="gallery-count" aria-live="polite">{i + 1} / {n}</span>}
+          </div>
+
+          {n > 1 && (
+            <ul className="gallery-thumbs" ref={thumbsRef} aria-label="Screenshots">
+              {images.map((img, k) => (
+                <li key={img.src}>
+                  <button
+                    type="button"
+                    className={`gallery-thumb ${k === i ? 'on' : ''}`}
+                    aria-current={k === i}
+                    aria-label={`Show image ${k + 1}`}
+                    onClick={() => go(k)}
+                  >
+                    <img src={img.src} alt="" loading="lazy" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="modal-body">
+          {role && <p className="modal-role">{role}</p>}
+          <h3 id="modal-title">{title}</h3>
+          <p className="muted">{details || description}</p>
+
+          <ul className="tag-list" aria-label="Tech stack">
+            {tags.map((t) => <li key={t} className={`tag ${t === 'Ongoing' ? 'tag-live' : ''}`}>{t}</li>)}
+          </ul>
+
+          {(github || demo || website) && (
+            <div className="project-links modal-links">
+              {demo && <a className="btn btn-sm play" href={demo} target="_blank" rel="noreferrer">Live demo</a>}
+              {website && <a className="btn btn-ghost btn-sm" href={website} target="_blank" rel="noreferrer">Website</a>}
+              {github && <a className="btn btn-ghost btn-sm" href={github} target="_blank" rel="noreferrer">Source code</a>}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
