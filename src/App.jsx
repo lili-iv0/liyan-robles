@@ -2,13 +2,11 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Toasts from './components/Toasts';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
-import { GameProvider } from './game/GameContext';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -20,10 +18,11 @@ function ScrollToTop() {
 
 export default function App() {
   return (
-    <GameProvider>
+    <>
+      <a className="skip" href="#main">Skip to content</a>
       <ScrollToTop />
       <Navbar />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -33,7 +32,6 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
-      <Toasts />
-    </GameProvider>
+    </>
   );
 }

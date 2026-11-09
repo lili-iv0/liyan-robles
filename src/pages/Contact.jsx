@@ -3,6 +3,13 @@ import SectionTitle from '../components/SectionTitle';
 import usePageTitle from '../hooks/usePageTitle';
 import profile from '../data/profile';
 
+// profile.formspreeId can be the bare id ("xdeajdpe") or the full endpoint URL.
+const formEndpoint = profile.formspreeId
+  ? profile.formspreeId.startsWith('http')
+    ? profile.formspreeId
+    : `https://formspree.io/f/${profile.formspreeId}`
+  : '';
+
 const channels = [
   { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
   { label: 'GitHub', value: profile.github.replace('https://', ''), href: profile.github },
@@ -19,7 +26,7 @@ export default function Contact() {
     const data = Object.fromEntries(new FormData(form));
 
     // No Formspree ID set: open the visitor's email app with the message filled in.
-    if (!profile.formspreeId) {
+    if (!formEndpoint) {
       const body = `${data.message}\n\n${data.name} (${data.email})`;
       window.location.href =
         `mailto:${profile.email}?subject=${encodeURIComponent(data.subject || 'Hello from your portfolio')}` +
@@ -30,7 +37,7 @@ export default function Contact() {
 
     setStatus('sending');
     try {
-      const res = await fetch(`https://formspree.io/f/${profile.formspreeId}`, {
+      const res = await fetch(formEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(data),
@@ -78,7 +85,7 @@ export default function Contact() {
           </div>
           <label>
             Subject
-            <input className="field" name="subject" type="text" />
+            <input className="field" name="subject" type="text" autoComplete="off" />
           </label>
           <label>
             Message

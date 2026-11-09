@@ -1,0 +1,141 @@
+/* =========================================================
+   Responsive layer. Imported last (see main.jsx) so it can
+   override the earlier files.
+   Breakpoints: 1500, 980, 860, 780 (menu), 640, 380.
+   ========================================================= */
+
+/* ----- Never scroll sideways; media never overflows ----- */
+html, body { overflow-x: clip; }
+img, svg, video { max-width: 100%; }
+
+/* Keep content clear of notches / home bars on phones */
+.footer-inner { padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px)); }
+@supports (padding: max(0px)) {
+  .container { width: min(var(--max), 100% - max(2.5rem, env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px) + 1.5rem)); }
+}
+
+/* ----- Big screens: let the layout breathe a little ----- */
+@media (min-width: 1500px) {
+  :root { --max: 1280px; }
+  .hero { gap: 4rem; }
+}
+
+/* ----- Grids that never overflow narrow screens ----- */
+.project-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.skill-groups { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.status-row   { grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+
+/* ----- Tablet landscape: keep the nav on one line ----- */
+@media (min-width: 781px) and (max-width: 980px) {
+  .navbar-inner { gap: 0.5rem; }
+  .brand-name { font-size: 1.2rem; }
+  .nav-links a { padding: 0.5rem 0.55rem; font-size: 1.1rem; letter-spacing: 0.03em; }
+}
+
+/* ----- Mobile menu ----- */
+@media (max-width: 780px) {
+  .navbar-inner { min-height: 60px; }
+  .nav-links {
+    max-height: calc(100vh - 60px); max-height: calc(100dvh - 60px); overflow-y: auto;
+    box-shadow: 0 8px 0 0 var(--shadow);
+  }
+  .nav-links a { border-left: 4px solid transparent; }
+  .nav-links a.active { border-left-color: var(--accent); background: var(--bg-soft); }
+  .nav-links a::before { display: none; }
+}
+
+/* ----- Tablet and below ----- */
+@media (max-width: 860px) {
+  .hero { gap: 2rem; padding-bottom: 10.5rem; }
+  .hero-visual { max-width: 640px; }
+  .about-intro { gap: 1.75rem; padding-bottom: 2.25rem; margin-bottom: 2.25rem; }
+  .about-avatar { width: min(260px, 70%); }
+  .section-head { margin-bottom: 1.75rem; }
+  .block-section { margin-bottom: 2.75rem; }
+}
+
+/* ----- Phones ----- */
+@media (max-width: 640px) {
+  body { font-size: 1rem; }
+  .container { width: calc(100% - 2rem); }
+  .section { padding-block: 2rem 2.5rem; }
+
+  h2 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+  h3 { font-size: 1.25rem; }
+  .h-sm { font-size: 1.6rem; }
+  .about-text h3 { font-size: 1.5rem; }
+  .lead { font-size: 1rem; margin-bottom: 1.25rem; }
+  .role { margin: 0.8rem 0; }
+  .kicker { letter-spacing: 0.14em; font-size: 1.15rem; }
+  .eyebrow { font-size: 0.95rem; letter-spacing: 0.1em; }
+
+  /* Section headers: "All projects" button drops under the text */
+  .section-head { align-items: flex-start; }
+
+  /* Hero: buttons share the row; Resume wraps full width */
+  .hero { padding-block: 1.75rem 9rem; }
+  .orb { right: 6%; top: 22px; transform: scale(0.7); transform-origin: top right; }
+  .prop { transform: scale(0.7); transform-origin: bottom center; }
+  .ground { height: 56px; }
+  .props { bottom: 56px; }
+  .cta-row .btn { flex: 1 1 calc(50% - 1rem); }
+  .code code { font-size: 0.78rem; line-height: 1.7; }
+  .code pre { padding: 1rem; }
+
+  /* Cards, filters, forms */
+  .project-grid { gap: 2rem 1.25rem; }
+  .project-body { padding: 1.1rem 1.1rem 1.3rem; }
+  .project-links .btn { flex: 1 1 auto; }
+  .filters { gap: 0.25rem; margin-bottom: 1.75rem; }
+  .skill-group { padding: 1.4rem 1.1rem 1.1rem; }
+  .status { padding: 0.9rem 1rem; }
+  .status-wrap { padding-top: 2rem; }
+  .form { padding: 1.25rem; }
+  .form .btn { justify-self: stretch; }
+  .channel { padding: 0.9rem 2.6rem 0.9rem 1.1rem; }
+  .log li { padding-left: 1.5rem; }
+
+  /* Footer stacks */
+  .footer { margin-top: 2rem; }
+  .footer-inner { flex-direction: column; align-items: flex-start; padding-block: 1.5rem; padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
+
+  /* Modal fills the screen like a sheet */
+  .modal-backdrop { padding: 0.5rem; align-items: end; }
+  .modal { max-height: calc(100vh - 1rem); max-height: calc(100dvh - 1rem); }
+  .modal-close { top: 0.5rem; right: 0.5rem; }
+  .modal-body h3 { font-size: 1.5rem; }
+  .modal-links .btn { flex: 1 1 auto; }
+  .gallery-count { right: 0.5rem; bottom: 0.5rem; font-size: 0.95rem; }
+}
+
+/* ----- Small phones ----- */
+@media (max-width: 380px) {
+  .container { width: calc(100% - 1.5rem); }
+  h1 { font-size: 2.4rem; }
+  .brand-name { font-size: 1rem; }
+  .logo { display: none; }
+  .nav-actions { gap: 0.25rem; }
+  .btn { font-size: 1.05rem; padding: 0.7rem 0.9rem; }
+  .cta-row .btn { flex-basis: 100%; }
+  .gallery-thumb { width: 72px; }
+}
+
+/* ----- Gallery: image never taller than the screen (short / landscape phones) ----- */
+.gallery-stage { max-height: 62vh; max-height: 62dvh; }
+@media (max-height: 520px) and (orientation: landscape) {
+  .modal-backdrop { padding: 0.5rem; align-items: start; }
+  .gallery-stage { max-height: 70dvh; }
+}
+
+/* ----- Touch screens: bigger tap targets, no hover-only controls ----- */
+@media (pointer: coarse) {
+  .icon-btn { width: 44px; height: 44px; }
+  .chip { padding: 0.55rem 0.9rem; }
+  .btn-sm { padding-block: 0.65rem; }
+  .nav-links a { padding-block: 0.9rem; }
+  .footer-links a { padding-block: 0.35rem; }
+  /* "View" hint is always visible, as a small corner badge so it never hides the screenshot */
+  .thumb-view { inset: auto 0.5rem 0.5rem auto; padding: 0.15rem 0.6rem; transform: none; }
+  .thumb-btn:hover img { transform: none; }
+  .gallery-nav { opacity: 1; }
+}

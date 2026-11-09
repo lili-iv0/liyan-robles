@@ -1,48 +1,4 @@
-import avatarImg from '../assets/avatar.png';
-
-export const avatar = {
-  src: avatarImg,
-  alt: 'Pixel ID card avatar',
-};
-
 export const sprites = {
-  coin: {
-    palette: { o: '#b8741a', y: '#ffd257', h: '#fff3b0' },
-    map: [
-      '..oooo..',
-      '.oyyyyo.',
-      'oyyhhyyo',
-      'oyhyyyyo',
-      'oyhyyyyo',
-      'oyyyyyyo',
-      '.oyyyyo.',
-      '..oooo..',
-    ],
-  },
-  heart: {
-    palette: { d: '#7a1230', r: '#ff4d6d', h: '#ffb3c1' },
-    map: [
-      '.dd.dd.',
-      'drrdrrd',
-      'drhrrrd',
-      'drrrrrd',
-      '.drrrd.',
-      '..drd..',
-      '...d...',
-    ],
-  },
-  star: {
-    palette: { o: '#b8741a', y: '#ffd257' },
-    map: [
-      '...o...',
-      '..oyo..',
-      'ooyyyoo',
-      'oyyyyyo',
-      '.oyyyo.',
-      '.oyyyo.',
-      '.oo.oo.',
-    ],
-  },
   cloud: {
     palette: { w: 'var(--cloud)', b: 'var(--cloud-sh)' },
     map: [
@@ -108,57 +64,6 @@ export const sprites = {
       'bBBBBBBBBBBb',
       'bBBBBBBBBBBb',
       '.bbbbbbbbbb.',
-    ],
-  },
-  sword: {
-    palette: { o: '#2a2455', w: '#e8f0ff', y: '#ffd257', b: '#8a5430' },
-    map: [
-      '..ooo..',
-      '..owo..',
-      '..owo..',
-      '..owo..',
-      '..owo..',
-      '.ooooo.',
-      'oyyyyyo',
-      '.ooboo.',
-      '..obo..',
-      '..ooo..',
-    ],
-  },
-  flag: {
-    palette: { p: '#8a5430', r: '#ff4d6d' },
-    map: [
-      'pp.....',
-      'pprrrr.',
-      'pprrrrr',
-      'pprrrr.',
-      'pprrr..',
-      'pp.....',
-      'pp.....',
-      'pp.....',
-      'pp.....',
-    ],
-  },
-  hero: {
-    palette: {
-      h: '#4a3d63', s: '#ffd9b8', k: '#1c1830', p: '#f4a0a8',
-      w: '#f4f4f4', t: '#1c1830', d: '#2f2b66',
-    },
-    map: [
-      '..hhhhh..',
-      '.hhhhhhh.',
-      'hhssssshh',
-      'hhskskshh',
-      'hhpsssphh',
-      '.hsssssh.',
-      '.hwwtwwh.',
-      'hwwwtwwwh',
-      'hwwwtwwwh',
-      '.wwwwwww.',
-      '..ddddd..',
-      '..dd.dd..',
-      '..dd.dd..',
-      '.ddd.ddd.',
     ],
   },
 };

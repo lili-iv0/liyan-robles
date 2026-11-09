@@ -6,15 +6,13 @@
 .section-head h2 { margin-bottom: 0.5rem; }
 .section-head p:not(.eyebrow) { margin: 0; max-width: 60ch; }
 
-/* ---------- Home: title-screen stage ---------- */
+/* ---------- Home: hero with decorative scene ---------- */
 .stage {
   position: relative; overflow: hidden; isolation: isolate;
   background: linear-gradient(var(--sky-top), var(--sky-bot));
 }
 .scene { position: absolute; inset: 0; z-index: 0; }
 .scene-bg { position: absolute; inset: 0; overflow: hidden; }
-.scene-fx { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-.scene-fx .coin-pick, .scene-fx .player-btn { pointer-events: auto; }
 
 .star {
   position: absolute; width: 4px; height: 4px; background: #fff; opacity: var(--star-op);
@@ -42,40 +40,9 @@
 .props { position: absolute; left: 0; right: 0; bottom: 72px; height: 0; }
 .prop { position: absolute; bottom: 0; line-height: 0; }
 
-.player { position: absolute; left: 60%; bottom: 72px; z-index: 3; display: flex; flex-direction: column; align-items: flex-start; }
-.player-btn { background: none; border: 0; padding: 0; cursor: pointer; line-height: 0; }
-.player-btn.jump { animation: hop 0.5s steps(8); }
-@keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-48px); } }
-.bubble {
-  --px: 3px; --pc: var(--edge);
-  position: relative; width: max-content; max-width: 220px; margin: 0 0 14px 0; padding: 0.45rem 0.7rem;
-  font-family: var(--font-pixel); font-size: 1.05rem; line-height: 1.25; font-weight: 500;
-  background: #fff; color: #15123f; --pc: #15123f;
-}
-.bubble::after {
-  content: ''; position: absolute; left: 22px; bottom: -11px; width: 10px; height: 8px; background: #fff;
-  box-shadow: -3px 0 0 #15123f, 3px 0 0 #15123f, 0 3px 0 #15123f;
-}
-
-.coin-pick {
-  position: absolute; z-index: 3; background: none; border: 0; padding: 4px; cursor: pointer; line-height: 0;
-  animation: bob 1.6s steps(4) infinite;
-}
-.coin-pick svg { animation: spin 1.2s steps(6) infinite; }
-.coin-pick:hover { filter: brightness(1.25); }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes spin { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.25); } }
-.coin-pop {
-  position: absolute; z-index: 4; pointer-events: none;
-  font-family: var(--font-pixel); font-weight: 700; font-size: 1.6rem; color: var(--accent);
-  text-shadow: 2px 2px 0 var(--shadow);
-  animation: pop 0.8s steps(8) both;
-}
-@keyframes pop { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-50px); opacity: 0; } }
-
 .hero {
   position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 3rem;
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; gap: 3rem;
   padding-block: clamp(2.5rem, 6vw, 4.5rem) 10.5rem;
 }
 .hero-copy, .hero-visual { min-width: 0; }
@@ -91,7 +58,7 @@
 
 .kicker {
   margin: 0 0 0.4rem; font-family: var(--font-pixel); font-weight: 600; font-size: 1.3rem;
-  letter-spacing: 0.3em; text-transform: uppercase; color: var(--pink);
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--kicker);
 }
 .role {
   font-family: var(--font-pixel); font-weight: 600; font-size: clamp(1.5rem, 3vw, 2rem);
@@ -100,8 +67,6 @@
 .lead { font-size: 1.1rem; color: var(--muted); max-width: 52ch; margin-bottom: 1.75rem; }
 [data-theme='dark'] .lead, :root:not([data-theme='light']) .lead { color: #cfcbf5; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: -3px; }
-.start-btn { font-size: 1.4rem; padding: 0.9rem 1.5rem; }
-.start-btn::before { animation: blink 0.9s steps(2) infinite; }
 
 /* Code panel */
 .code { margin: 0; background: var(--code-bg); overflow: hidden; }
@@ -124,17 +89,14 @@
 @media (max-width: 860px) {
   .hero { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding-bottom: 11rem; }
   .code code { font-size: 0.82rem; }
-  .player { left: 8%; }
   .prop-md { display: none; }
-  .hero { padding-bottom: 16rem; }
 }
 
-/* ---------- Home: quests ---------- */
+/* ---------- Home: current status ---------- */
 .status-wrap { padding-top: 3rem; }
-.quests-title { margin-bottom: 1.25rem; }
+.now-title { margin-bottom: 1.25rem; }
 .status-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.75rem; }
 .status { display: flex; align-items: flex-start; gap: 1rem; margin: 0; padding: 1.1rem 1.25rem; background: var(--card); }
-.status .sprite { margin-top: 0.3rem; flex: none; }
 .status dt { font-family: var(--font-pixel); font-weight: 600; font-size: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.2rem; }
 .status dd { margin: 0; font-weight: 500; line-height: 1.5; }
 
@@ -150,11 +112,6 @@
 .thumb { position: relative; aspect-ratio: 16 / 9; border-bottom: 4px solid var(--edge); overflow: hidden; background: var(--code-bg); }
 .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-.stage-tag {
-  position: absolute; left: 0; top: 0; z-index: 2; padding: 0.2rem 0.7rem 0.25rem;
-  font-family: var(--font-pixel); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.1em; text-transform: uppercase;
-  background: var(--accent); color: var(--accent-fg);
-}
 .thumb-ph {
   height: 100%; display: grid; place-items: center;
   font-family: var(--font-pixel); font-size: 3.5rem; font-weight: 700;
@@ -246,11 +203,10 @@
 
 /* ---------- 404 ---------- */
 .notfound { text-align: center; }
-.notfound h1 { font-size: clamp(3rem, 12vw, 6.5rem); color: var(--red); text-shadow: 0 4px 0 #7a1230, 4px 4px 0 #7a1230, 4px 8px 0 var(--shadow); }
+.notfound h1 { font-size: clamp(3rem, 12vw, 6.5rem); color: var(--title); text-shadow: 0 4px 0 var(--title-sh), 4px 4px 0 var(--title-sh), 4px 8px 0 var(--shadow); }
 .nf-code { font-family: var(--font-pixel); font-weight: 600; font-size: 1.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--violet); }
-.continue { margin: 2rem 0 0.75rem; font-family: var(--font-pixel); font-weight: 700; font-size: 2rem; text-transform: uppercase; color: var(--accent); animation: blink 1s steps(2) infinite; }
 
-/* ---------- Project cards: whole thumbnail + title open the gallery ---------- */
+/* ---------- Project cards: thumbnail + title open the gallery ---------- */
 .thumb-btn { display: block; width: 100%; padding: 0; margin: 0; border: 0; border-bottom: 4px solid var(--edge); font: inherit; color: inherit; cursor: pointer; text-align: left; }
 .thumb-btn img { transition: transform 0.35s steps(6); }
 .thumb-btn:hover img, .thumb-btn:focus-visible img { transform: scale(1.06); }
@@ -304,7 +260,7 @@
 .gallery-thumb.on { opacity: 1; border-color: var(--accent); }
 
 .modal-body { padding: 1.4rem 1.6rem 1.7rem; overflow-y: auto; }
-.modal-role { margin: 0 0 0.35rem; font-family: var(--font-pixel); font-weight: 600; font-size: 1.05rem; letter-spacing: 0.08em; color: var(--pink); }
+.modal-role { margin: 0 0 0.35rem; font-family: var(--font-pixel); font-weight: 600; font-size: 1.05rem; letter-spacing: 0.08em; color: var(--kicker); }
 .modal-body h3 { font-size: 1.9rem; color: var(--accent); margin-bottom: 0.6rem; }
 .modal-body .muted { max-width: 70ch; }
 .modal-links { padding-top: 1.1rem; }

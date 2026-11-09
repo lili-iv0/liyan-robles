@@ -1,6 +1,6 @@
 /* =========================================================
    Design tokens: change colours, fonts and widths here
-   Dark theme = night level. Light theme = day level.
+   Dark theme is the default; light theme is toggled from the navbar.
    ========================================================= */
 :root {
   --bg: #0d0b26;
@@ -16,7 +16,7 @@
   --accent-fg: #1a1240;
   --link: #ffd257;
   --violet: #b3a8ff;
-  --pink: #ff7aa8;
+  --kicker: #5fe3a1;   /* small labels: "Hi, I'm", project roles */
   --green: #5fe3a1;
   --blue: #6bc4ff;
   --red: #ff5d6c;
@@ -25,6 +25,7 @@
   --title-sh: #b8631a;
   --grid: rgba(139, 134, 236, 0.07);
   --scan: rgba(0, 0, 0, 0.09);
+
 
   --sky-top: #08061c;
   --sky-bot: #2d2078;
@@ -69,7 +70,7 @@
   --accent-fg: #ffffff;
   --link: #3a2cc0;
   --violet: #4a3bd1;
-  --pink: #c2245f;
+  --kicker: #065a3a;
   --green: #0b7a4b;
   --blue: #1a62b8;
   --red: #d11f3b;
@@ -78,6 +79,7 @@
   --title-sh: #b9aeff;
   --grid: rgba(42, 37, 112, 0.06);
   --scan: rgba(0, 0, 0, 0.03);
+
 
   --sky-top: #5ec0ff;
   --sky-bot: #def4ff;
@@ -116,8 +118,9 @@ body {
 
 ::selection { background: var(--accent); color: var(--accent-fg); }
 
-#root { display: flex; flex-direction: column; min-height: 100vh; }
+#root { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 main { flex: 1; }
+main:focus { outline: none; }
 
 /* Big text uses the pixel font */
 h1, h2, h3 {
@@ -168,14 +171,13 @@ img { max-width: 100%; display: block; }
 
 :focus-visible { outline: 3px dashed var(--accent); outline-offset: 4px; }
 
-.sprite { display: block; max-width: none; height: auto; }
 
 /* =========================================================
    Pixel boxes: stepped corners + chunky border + dark lip.
    --px = pixel size, --pc = border colour
    ========================================================= */
-.project, .skill-group, .channel, .form, .code, .status, .toast,
-.btn, .icon-btn, .tag, .chip, .field, .pill, .bubble {
+.project, .skill-group, .channel, .form, .code, .status,
+.btn, .icon-btn, .tag, .chip, .field, .pill {
   --px: 4px;
   --pc: var(--edge);
   --edges:
@@ -187,11 +189,11 @@ img { max-width: 100%; display: block; }
   border-radius: 0;
 }
 /* big boxes also get a dark lip underneath */
-.project, .skill-group, .channel, .form, .code, .status, .toast {
+.project, .skill-group, .channel, .form, .code, .status {
   box-shadow: var(--edges), 0 calc(var(--px) * 2) 0 0 var(--shadow);
 }
 /* small things: just the pixel edge, plus margin so it never overlaps neighbours */
-.btn, .icon-btn, .tag, .chip, .field, .pill, .bubble { box-shadow: var(--edges); margin: var(--px); }
+.btn, .icon-btn, .tag, .chip, .field, .pill { box-shadow: var(--edges); margin: var(--px); }
 .btn { --px: 3px; }
 .tag, .chip, .pill, .btn-sm, .icon-btn { --px: 2px; }
 

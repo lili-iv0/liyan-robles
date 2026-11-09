@@ -15,6 +15,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0d0b26' : '#eaf6ff');
     try {
       localStorage.setItem(KEY, theme);
     } catch {

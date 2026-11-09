@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import PixelSprite from './PixelSprite';
-import { TOTAL_COINS, useGame } from '../game/GameContext';
 
 // Pseudo-random but fixed star positions (no layout jumping between renders).
 const rand = (n) => {
@@ -20,39 +18,11 @@ const CLOUDS = [
   { top: '17%', size: 6, dur: 120, delay: -95 },
 ];
 
-// Where the collectible coins hide. TOTAL_COINS in GameContext must match this list.
-const COINS = [
-  { id: 'c1', style: { left: '2.5%', top: '2%' } },
-  { id: 'c2', style: { left: '47%', top: '6%' } },
-  { id: 'c3', style: { right: '4%', top: '34%' } },
-  { id: 'c4', style: { left: '38%', bottom: '104px' } },
-  { id: 'c5', style: { right: '19%', bottom: '118px' } },
-];
-
-// The animated "title screen" background: sky, clouds, ground, props, a little player.
+// Decorative background for the home hero: sky, clouds, ground and props. Nothing here is interactive.
 export default function Scene() {
-  const { coins, collectCoin, play } = useGame();
-  const [pops, setPops] = useState([]);
-  const [jump, setJump] = useState(false);
-  const left = TOTAL_COINS - coins.length;
-
-  function pick(c) {
-    collectCoin(c.id);
-    const id = Date.now() + c.id;
-    setPops((p) => [...p, { id, style: c.style }]);
-    setTimeout(() => setPops((p) => p.filter((x) => x.id !== id)), 800);
-  }
-
-  function hop() {
-    play('click');
-    setJump(true);
-    setTimeout(() => setJump(false), 500);
-  }
-
   return (
-    <>
-      <div className="scene" aria-hidden="true">
-        <div className="scene-bg">
+    <div className="scene" aria-hidden="true">
+      <div className="scene-bg">
         {STARS.map((s, i) => (
           <span
             key={i}
@@ -74,34 +44,7 @@ export default function Scene() {
           <div className="prop prop-md" style={{ right: '14%' }}><PixelSprite name="chest" size={5} /></div>
         </div>
         <div className="ground" />
-        </div>
       </div>
-
-      {/* Interactive layer sits above the page content so coins and the player stay clickable. */}
-      <div className="scene-fx">
-      <div className="player">
-        {left > 0 ? (
-          <p className="bubble">Psst! {left} coin{left > 1 ? 's are' : ' is'} hiding on this screen.</p>
-        ) : (
-          <p className="bubble">You found every coin!</p>
-        )}
-        <button type="button" className={`player-btn ${jump ? 'jump' : ''}`} onClick={hop} aria-label="Make the pixel player jump">
-          <PixelSprite name="hero" size={6} />
-        </button>
-      </div>
-
-      {COINS.map(
-        (c) =>
-          !coins.includes(c.id) && (
-            <button key={c.id} type="button" className="coin-pick" style={c.style} onClick={() => pick(c)} aria-label="Collect a hidden coin">
-              <PixelSprite name="coin" size={5} />
-            </button>
-          )
-      )}
-      {pops.map((p) => (
-        <span key={p.id} className="coin-pop" style={p.style} aria-hidden="true">+1</span>
-      ))}
-      </div>
-    </>
+    </div>
   );
 }

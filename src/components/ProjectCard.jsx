@@ -19,7 +19,6 @@ export default function ProjectCard({ project, index = 0, onOpen }) {
         aria-label={`View ${title} screenshots`}
       >
         <span className="thumb-view" aria-hidden="true">View</span>
-        <span className="stage-tag">Stage {String(index + 1).padStart(2, '0')}</span>
         {image ? (
           <img src={image} alt={`Screenshot of ${title}`} loading="lazy" />
         ) : (

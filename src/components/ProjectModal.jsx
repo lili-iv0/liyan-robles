@@ -91,7 +91,7 @@ export default function ProjectModal({ project, onClose }) {
                 alt={current.alt || `${title} screenshot ${i + 1}`}
               />
             ) : (
-              <div className="gallery-empty">{loading ? 'Loading level…' : 'No screenshots yet'}</div>
+              <div className="gallery-empty">{loading ? 'Loading images…' : 'No screenshots yet'}</div>
             )}
 
             {n > 1 && (
@@ -100,7 +100,7 @@ export default function ProjectModal({ project, onClose }) {
                 <button type="button" className="icon-btn gallery-nav next" onClick={() => go(i + 1)} aria-label="Next image">›</button>
               </>
             )}
-            {n > 0 && <span className="gallery-count" aria-live="polite">{i + 1} / {n}</span>}
+            {n > 1 && <span className="gallery-count" aria-live="polite">{i + 1} / {n}</span>}
           </div>
 
           {n > 1 && (

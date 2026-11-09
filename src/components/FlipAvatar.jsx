@@ -24,7 +24,6 @@ export default function FlipAvatar({ front, alt }) {
   useEffect(() => {
     let live = true;
     firstThatLoads(candidates()).then((url) => {
-      console.log('About hover picture:', url || 'NOT FOUND');
       if (live) setBack(url);
     });
     return () => { live = false; };

@@ -2,7 +2,7 @@ import SectionTitle from '../components/SectionTitle';
 import FlipAvatar from '../components/FlipAvatar';
 import usePageTitle from '../hooks/usePageTitle';
 import profile from '../data/profile';
-import { avatar } from '../data/sprites';
+import { avatar } from '../data/avatar';
 
 export default function About() {
   usePageTitle('About');
@@ -11,7 +11,7 @@ export default function About() {
     <div className="container section">
       <div className="about-intro">
         <div className="about-text">
-          <SectionTitle kicker="Player profile" title="About me">Background, skills, and education.</SectionTitle>
+          <SectionTitle kicker="Who I am" title="About me">Background, skills, and education.</SectionTitle>
           <h3>{profile.name}, {profile.title}</h3>
           {profile.bio.map((p) => (
             <p key={p}>{p}</p>
@@ -29,7 +29,7 @@ export default function About() {
       </div>
 
       <section aria-labelledby="skills-h" className="block-section">
-        <p className="eyebrow">Inventory</p>
+        <p className="eyebrow">What I use</p>
         <h2 id="skills-h" className="h-sm">Skills</h2>
         <div className="skill-groups">
           {profile.skills.map((g) => (
@@ -46,7 +46,7 @@ export default function About() {
       </section>
 
       <section aria-labelledby="log-h" className="block-section">
-        <p className="eyebrow">Quest log</p>
+        <p className="eyebrow">Journey</p>
         <h2 id="log-h" className="h-sm">Education and experience</h2>
         <ol className="log">
           {profile.timeline.map((t) => (

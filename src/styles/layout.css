@@ -1,4 +1,4 @@
-/* ---------- Header: nav + HUD ---------- */
+/* ---------- Header: navigation ---------- */
 .navbar {
   position: sticky; top: 0; z-index: 20;
   background: var(--bg); border-bottom: 4px solid var(--edge);
@@ -10,12 +10,7 @@
   font-family: var(--font-pixel); font-weight: 700; font-size: 1.35rem; letter-spacing: 0.02em;
   color: var(--ink); text-decoration: none;
 }
-.brand-mark {
-  display: inline-grid; place-items: center; min-width: 40px; height: 32px; padding: 0 0.4rem;
-  font-size: 1.1rem; background: var(--accent); color: var(--accent-fg);
-  box-shadow: 0 -3px 0 0 var(--accent-dk), 0 3px 0 0 var(--accent-dk), -3px 0 0 0 var(--accent-dk), 3px 0 0 0 var(--accent-dk);
-  margin: 3px;
-}
+.logo { flex: none; display: block; }
 
 .nav-links { display: flex; gap: 0.25rem; }
 .nav-links a {
@@ -35,21 +30,11 @@
 .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
 .nav-toggle { display: none; }
 
-.hud { background: var(--bg-soft); border-top: 4px solid var(--shadow); }
-.hud-inner { display: flex; align-items: center; gap: 0.5rem 1.75rem; min-height: 40px; padding-block: 0.3rem; }
-.hud-item { display: inline-flex; align-items: center; gap: 0.5rem; }
-.hud-label { font-family: var(--font-pixel); font-weight: 600; font-size: 1.05rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.hud-num { font-family: var(--font-pixel); font-weight: 600; font-size: 1.15rem; color: var(--ink); }
-.hearts { display: inline-flex; gap: 4px; }
-.hud-xp { flex: 1; max-width: 420px; margin-left: auto; }
-.xp-bar {
-  flex: 1; height: 16px; background: var(--code-bg); border: 3px solid var(--edge); padding: 2px; min-width: 70px;
+/* Dimmed area behind the open mobile menu: tap it to close */
+.nav-scrim {
+  position: fixed; inset: 0; z-index: -1; width: 100%; border: 0; padding: 0;
+  background: rgba(5, 4, 26, 0.6); cursor: default;
 }
-.xp-fill {
-  height: 100%; transition: width 0.5s steps(10);
-  background: repeating-linear-gradient(90deg, var(--green) 0 8px, transparent 8px 10px);
-}
-.hud-xp-num { min-width: 4.5ch; text-align: right; }
 
 @media (max-width: 780px) {
   .nav-toggle { display: inline-grid; }
@@ -62,11 +47,7 @@
   .nav-links.open { display: flex; }
   .nav-links a { padding: 0.8rem 0.5rem; font-size: 1.3rem; }
   .brand-name { font-size: 1.15rem; }
-  .hud-label:not(.hud-xp .hud-label) { display: none; }
-  .hud-xp-num { display: none; }
-  .sfx { display: none; }
 }
-@media (max-width: 420px) { .brand-mark { display: none; } }
 
 /* ---------- Footer ---------- */
 .footer { margin-top: 3rem; background: var(--bg-soft); border-top: 4px solid var(--edge); }
@@ -74,23 +55,10 @@
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 1rem 2rem; padding-block: 1.75rem;
 }
-.footer-copy { margin: 0; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; font-size: 0.95rem; color: var(--muted); }
+.footer-copy { margin: 0; font-size: 0.95rem; color: var(--muted); }
 .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.5rem; }
 .footer-links a {
   font-family: var(--font-pixel); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--muted); text-decoration: none;
 }
 .footer-links a:hover { color: var(--accent); }
-
-/* ---------- Achievement toasts ---------- */
-.toasts { position: fixed; right: 1.25rem; bottom: 1.5rem; z-index: 150; display: grid; gap: 1.25rem; width: min(340px, calc(100% - 2.5rem)); pointer-events: none; }
-.toast {
-  display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.9rem 1rem;
-  background: var(--card); --pc: var(--accent);
-  animation: toast-in 0.4s steps(6) both;
-}
-.toast p { margin: 0; }
-.toast-kicker { font-family: var(--font-pixel); font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--violet); line-height: 1.2; }
-.toast-title { font-family: var(--font-pixel); font-weight: 700; font-size: 1.4rem; color: var(--accent); line-height: 1.2; margin: 0.15rem 0 0.2rem; }
-.toast-text { font-size: 0.9rem; line-height: 1.45; color: var(--ink); }
-@keyframes toast-in { from { transform: translateX(120%); } to { transform: none; } }

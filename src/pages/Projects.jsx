@@ -15,8 +15,8 @@ export default function Projects() {
 
   return (
     <div className="container section">
-      <SectionTitle kicker="All projects" title="Stage select">
-        Filter by technology. Each project links to its source code and, where available, a live demo.
+      <SectionTitle kicker="Portfolio" title="Projects">
+        Filter by technology. Select a project to see screenshots, source code, and a live demo where available.
       </SectionTitle>
 
       <div className="filters" role="group" aria-label="Filter projects by tech">
