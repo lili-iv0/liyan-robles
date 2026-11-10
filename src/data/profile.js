@@ -7,7 +7,7 @@ const profile = {
   email: 'leeann.robles1804@gmail.com',
   github: 'https://github.com/lili-iv0',
   linkedin: 'https://www.linkedin.com/in/liyan-robles',
-  resumeUrl: 'https://drive.google.com/file/d/1DfXWc6tl2g2oXMn8s9G_F9F4tzf74uUm/view?usp=sharing', // e.g. '/resume.pdf' (put the file in the /public folder). Leave empty to hide the button.
+  resumeUrl: 'https://drive.google.com/file/d/1-pnlCx0JiIVkameS-Pa0Yj94L3PVJqVM/view?usp=sharing', // e.g. '/resume.pdf' (put the file in the /public folder). Leave empty to hide the button.
 
   // Contact form: paste your free Web3Forms access key (get it at web3forms.com, it is emailed to you).
   // It is safe to keep in the code: it only lets people send messages to your inbox.
