@@ -54,7 +54,7 @@ const projects = [
   {
     id: 'raws-game',
     video: '',
-    role: 'Game Designer | Developer',
+    role: 'Sound Designer | Game Designer | Developer',
     title: 'Red Alert: Weeks of Survival',
     description:
       'A top-down survival RPG built in Unity where players prepare for a natural disaster, manage resources, craft tools, and make critical decisions to survive.',
@@ -68,7 +68,7 @@ const projects = [
   {
     id: 'fitness-tracker',
     video: '',
-    role: 'Full-stack Developer',
+    role: 'UI/UX | Full-stack Developer',
     title: 'Fitness Tracker',
     description:
       ' A web app for tracking student fitness progress, with progress charts for students and a class dashboard for teachers.',
