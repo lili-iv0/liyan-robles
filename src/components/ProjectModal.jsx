@@ -25,6 +25,7 @@ export default function ProjectModal({ project, onClose }) {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
+      else if (e.target?.closest?.('video')) return; // arrows seek inside a playing video
       else if (e.key === 'ArrowRight') go(i + 1);
       else if (e.key === 'ArrowLeft') go(i - 1);
       else if (e.key === 'Tab') {
@@ -60,11 +61,15 @@ export default function ProjectModal({ project, onClose }) {
   // preload neighbours so the slide never flashes empty
   useEffect(() => {
     [i + 1, i - 1].forEach((k) => {
-      if (images[(k + n) % n]) new Image().src = images[(k + n) % n].src;
+      const next = images[(k + n) % n];
+      if (next && next.type === 'image') new Image().src = next.src;
     });
   }, [i, images, n]);
 
-  const onTouchStart = (e) => { touchX.current = e.touches[0].clientX; };
+  const onTouchStart = (e) => {
+    // don't treat a drag on the video's seek bar as a swipe
+    touchX.current = e.target.closest?.('video') ? null : e.touches[0].clientX;
+  };
   const onTouchEnd = (e) => {
     if (touchX.current == null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
@@ -83,38 +88,65 @@ export default function ProjectModal({ project, onClose }) {
 
         <div className="gallery">
           <div className="gallery-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-            {current ? (
+            {current?.type === 'video' && (
+              <video
+                key={current.src}
+                className="gallery-media"
+                src={current.src}
+                controls
+                playsInline
+                preload="metadata"
+                aria-label={current.alt || `${title} video`}
+              />
+            )}
+            {current?.type === 'embed' && (
+              <iframe
+                key={current.src}
+                className="gallery-media"
+                src={current.src}
+                title={current.alt || `${title} video`}
+                loading="lazy"
+                allow="accelerometer; encrypted-media; fullscreen; picture-in-picture"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            )}
+            {current && current.type !== 'video' && current.type !== 'embed' && (
               <img
                 key={current.src}
                 className={`gallery-img ${dir > 0 ? 'from-right' : 'from-left'}`}
                 src={current.src}
                 alt={current.alt || `${title} screenshot ${i + 1}`}
               />
-            ) : (
-              <div className="gallery-empty">{loading ? 'Loading images…' : 'No screenshots yet'}</div>
             )}
+            {!current && <div className="gallery-empty">{loading ? 'Loading…' : 'No images yet'}</div>}
 
             {n > 1 && (
               <>
-                <button type="button" className="icon-btn gallery-nav prev" onClick={() => go(i - 1)} aria-label="Previous image">‹</button>
-                <button type="button" className="icon-btn gallery-nav next" onClick={() => go(i + 1)} aria-label="Next image">›</button>
+                <button type="button" className="icon-btn gallery-nav prev" onClick={() => go(i - 1)} aria-label="Previous">‹</button>
+                <button type="button" className="icon-btn gallery-nav next" onClick={() => go(i + 1)} aria-label="Next">›</button>
               </>
             )}
-            {n > 1 && <span className="gallery-count" aria-live="polite">{i + 1} / {n}</span>}
+            {n > 1 && (
+              <span className={`gallery-count ${current?.type === 'image' ? '' : 'on-video'}`} aria-live="polite">{i + 1} / {n}</span>
+            )}
           </div>
 
           {n > 1 && (
-            <ul className="gallery-thumbs" ref={thumbsRef} aria-label="Screenshots">
+            <ul className="gallery-thumbs" ref={thumbsRef} aria-label="Screenshots and videos">
               {images.map((img, k) => (
                 <li key={img.src}>
                   <button
                     type="button"
                     className={`gallery-thumb ${k === i ? 'on' : ''}`}
                     aria-current={k === i}
-                    aria-label={`Show image ${k + 1}`}
+                    aria-label={`Show ${img.type === 'image' ? 'image' : 'video'} ${k + 1}`}
                     onClick={() => go(k)}
                   >
-                    <img src={img.src} alt="" loading="lazy" />
+                    {img.type === 'video' && <video src={`${img.src}#t=0.5`} muted playsInline preload="metadata" tabIndex={-1} />}
+                    {img.type === 'embed' && (img.poster ? <img src={img.poster} alt="" loading="lazy" /> : <span className="thumb-blank" />)}
+                    {img.type !== 'video' && img.type !== 'embed' && <img src={img.src} alt="" loading="lazy" />}
+                    {img.type !== 'image' && <span className="thumb-play" aria-hidden="true" />}
                   </button>
                 </li>
               ))}

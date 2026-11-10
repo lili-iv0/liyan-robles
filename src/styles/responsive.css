@@ -90,8 +90,10 @@ img, svg, video { max-width: 100%; }
   .skill-group { padding: 1.4rem 1.1rem 1.1rem; }
   .status { padding: 0.9rem 1rem; }
   .status-wrap { padding-top: 2rem; }
-  .form { padding: 1.25rem; }
-  .form .btn { justify-self: stretch; }
+  .compose-head, .compose-row, .compose-body, .attachments, .compose-foot, .form-status { padding-inline: 1rem; }
+  .compose-label { width: 4.6rem; font-size: 1rem; }
+  .compose-hint { order: 5; flex-basis: 100%; }
+  .attachment-name { max-width: 8rem; }
   .channel { padding: 0.9rem 2.6rem 0.9rem 1.1rem; }
   .log li { padding-left: 1.5rem; }
 
@@ -138,4 +140,9 @@ img, svg, video { max-width: 100%; }
   .thumb-view { inset: auto 0.5rem 0.5rem auto; padding: 0.15rem 0.6rem; transform: none; }
   .thumb-btn:hover img { transform: none; }
   .gallery-nav { opacity: 1; }
+}
+
+/* Side thumbnail strip: start below the close button so it never covers the first thumbnail */
+@media (min-width: 641px) {
+  .gallery-thumbs { padding-top: 3.4rem; }
 }

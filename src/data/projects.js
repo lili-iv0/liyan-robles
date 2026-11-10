@@ -7,6 +7,7 @@ import trackerImg from '../assets/tracker.jpeg';
 const projects = [
   {
     id: 'facility-reservation',
+    video: '', // optional: a YouTube / Vimeo link, or a direct .mp4 / .webm URL (shown first in the gallery)
     role: 'UI/UX | Full-stack Developer',
     details:
       'Booking portal for campus rooms and halls with admin approval, a weekly calendar, check-in tracking, and printable slips.',
@@ -22,6 +23,7 @@ const projects = [
   },
   {
     id: 'alab-ready',
+    video: '',
     role: 'UI/UX | Full-stack Developer',
     details:
       'An interactive disaster preparedness platform featuring five modules on earthquakes, common accidents, storm surges, and fire, with pre-tests, interactive lessons, quick checks, educational minigames, scenario-based post-tests, AI-generated summaries, teacher analytics, and collaborative module creation.',
@@ -37,6 +39,7 @@ const projects = [
   },
   {
     id: 'word-bud',
+    video: '',
     role: 'UI/UX | Mobile App Developer',
     title: 'Word Bud',
     description:
@@ -50,6 +53,7 @@ const projects = [
   },
   {
     id: 'raws-game',
+    video: '',
     role: 'Game Designer | Developer',
     title: 'Red Alert: Weeks of Survival',
     description:
@@ -63,6 +67,7 @@ const projects = [
   },
   {
     id: 'fitness-tracker',
+    video: '',
     role: 'Full-stack Developer',
     title: 'Fitness Tracker',
     description:

@@ -176,7 +176,7 @@ img { max-width: 100%; display: block; }
    Pixel boxes: stepped corners + chunky border + dark lip.
    --px = pixel size, --pc = border colour
    ========================================================= */
-.project, .skill-group, .channel, .form, .code, .status,
+.project, .skill-group, .channel, .compose, .code, .status,
 .btn, .icon-btn, .tag, .chip, .field, .pill {
   --px: 4px;
   --pc: var(--edge);
@@ -189,7 +189,7 @@ img { max-width: 100%; display: block; }
   border-radius: 0;
 }
 /* big boxes also get a dark lip underneath */
-.project, .skill-group, .channel, .form, .code, .status {
+.project, .skill-group, .channel, .compose, .code, .status {
   box-shadow: var(--edges), 0 calc(var(--px) * 2) 0 0 var(--shadow);
 }
 /* small things: just the pixel edge, plus margin so it never overlaps neighbours */
