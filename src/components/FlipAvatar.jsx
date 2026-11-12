@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { siteImageUrl } from '../lib/supabase';
+import aboutHover from '../assets/about-hover.png';
 
 const names = ['about-hover.png', 'about-hover.jpg', 'about-hover.jpeg', 'about-hover.webp'];
-const candidates = () => names.flatMap((n) => [siteImageUrl(n), `/${n}`]).filter(Boolean);
+// The bundled image comes first, so the flip always works. Supabase / public files are optional overrides-as-fallbacks.
+const candidates = () => [aboutHover, ...names.flatMap((n) => [siteImageUrl(n), `/${n}`])].filter(Boolean);
 
 function firstThatLoads(urls) {
   return new Promise((resolve) => {

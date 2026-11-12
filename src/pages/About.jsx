@@ -17,7 +17,7 @@ export default function About() {
             <p key={p}>{p}</p>
           ))}
           {profile.resumeUrl && (
-            <a className="btn btn-sm" href={profile.resumeUrl} target="_blank" rel="noreferrer">
+            <a className="btn" href={profile.resumeUrl} target="_blank" rel="noreferrer">
               Resume
             </a>
           )}

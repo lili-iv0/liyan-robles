@@ -50,10 +50,22 @@
   --tone-3: #5fd3a5;
   --tone-4: #6bb6ff;
 
+  /* Pixel font: ONLY for the big hero title, 404 and initials. Everything you read uses the two fonts below. */
   --font-pixel: 'Pixelify Sans', 'Courier New', ui-monospace, monospace;
+  /* Headings, nav, buttons, labels */
+  --font-head: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Paragraphs */
   --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-code: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --max: 1120px;
+
+  /* Shape + sizing shared by every button, chip, field and card */
+  --r: 10px;          /* buttons, chips, fields */
+  --r-lg: 16px;       /* cards, panels, modal */
+  --r-sm: 6px;        /* tags */
+  --bw: 2px;          /* border width */
+  --control-h: 46px;  /* every button / chip / icon button is this tall */
+  --lip: 4px;         /* the solid "game button" shadow under controls */
 }
 
 [data-theme='light'] {
@@ -114,6 +126,7 @@ body {
   color: var(--ink);
   background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection { background: var(--accent); color: var(--accent-fg); }
@@ -122,32 +135,37 @@ body {
 main { flex: 1; }
 main:focus { outline: none; }
 
-/* Big text uses the pixel font */
+/* ----- Type scale -----
+   h1  pixel font, hero only  | h2/h3 Space Grotesk | body Plus Jakarta Sans */
 h1, h2, h3 {
-  font-family: var(--font-pixel);
+  font-family: var(--font-head);
   color: var(--ink);
   line-height: 1.15;
   margin: 0 0 0.6em;
   overflow-wrap: anywhere;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 h1 {
-  font-size: clamp(2.75rem, 7.2vw, 4.75rem);
-  line-height: 1.02;
+  font-family: var(--font-pixel);
+  font-size: clamp(2.6rem, 6.6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: 0;
   color: var(--title);
-  text-shadow: 0 4px 0 var(--title-sh), 4px 4px 0 var(--title-sh), 4px 8px 0 var(--shadow);
+  /* one clean offset instead of the old stacked shadow */
+  text-shadow: 3px 3px 0 var(--title-sh);
 }
-h2 { font-size: clamp(2rem, 4.2vw, 2.75rem); text-shadow: 3px 3px 0 var(--shadow); }
-h3 { font-size: 1.4rem; font-weight: 600; }
-.h-sm { font-size: 1.9rem; margin-bottom: 1.25rem; }
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); }
+h3 { font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.h-sm { font-size: clamp(1.6rem, 3vw, 2rem); margin-bottom: 1.25rem; }
 
+/* Small label above a heading: sentence case, readable size */
 .eyebrow {
   display: flex; align-items: center; gap: 0.6rem;
-  margin: 0 0 0.5rem; font-family: var(--font-pixel); font-size: 1.05rem; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--violet);
+  margin: 0 0 0.6rem; font-family: var(--font-head); font-size: 1rem; font-weight: 600;
+  letter-spacing: 0.01em; color: var(--violet);
 }
-.eyebrow::before { content: ''; width: 12px; height: 12px; background: var(--accent); flex: none; }
+.eyebrow::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); flex: none; }
 
 p { margin: 0 0 1em; }
 a { color: var(--link); }
@@ -165,92 +183,112 @@ img { max-width: 100%; display: block; }
 .skip {
   position: absolute; left: 1rem; top: -4rem; z-index: 300;
   background: var(--accent); color: var(--accent-fg);
-  padding: 0.6rem 1rem; font-family: var(--font-pixel); font-weight: 600;
+  padding: 0.6rem 1rem; font-family: var(--font-head); font-weight: 700; border-radius: var(--r);
 }
 .skip:focus { top: 1rem; }
 
-:focus-visible { outline: 3px dashed var(--accent); outline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 
 /* =========================================================
-   Pixel boxes: stepped corners + chunky border + dark lip.
-   --px = pixel size, --pc = border colour
+   Surfaces: one border + radius recipe for every box.
+   --pc = border colour (hover/focus change it)
    ========================================================= */
 .project, .skill-group, .channel, .compose, .code, .status,
 .btn, .icon-btn, .tag, .chip, .field, .pill {
-  --px: 4px;
   --pc: var(--edge);
-  --edges:
-    0 calc(var(--px) * -1) 0 0 var(--pc),
-    0 var(--px) 0 0 var(--pc),
-    calc(var(--px) * -1) 0 0 0 var(--pc),
-    var(--px) 0 0 0 var(--pc);
-  border: 0;
-  border-radius: 0;
+  border: var(--bw) solid var(--pc);
 }
-/* big boxes also get a dark lip underneath */
+/* big surfaces */
 .project, .skill-group, .channel, .compose, .code, .status {
-  box-shadow: var(--edges), 0 calc(var(--px) * 2) 0 0 var(--shadow);
+  border-radius: var(--r-lg);
+  box-shadow: 0 6px 0 0 var(--shadow);
 }
-/* small things: just the pixel edge, plus margin so it never overlaps neighbours */
-.btn, .icon-btn, .tag, .chip, .field, .pill { box-shadow: var(--edges); margin: var(--px); }
-.btn { --px: 3px; }
-.tag, .chip, .pill, .btn-sm, .icon-btn { --px: 2px; }
+
+/* =========================================================
+   Controls: buttons, icon buttons and chips share ONE height,
+   ONE font and ONE radius on every page.
+   ========================================================= */
+.btn, .icon-btn, .chip {
+  min-height: var(--control-h);
+  border-radius: var(--r);
+  font-family: var(--font-head);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
 
 /* ----- Buttons ----- */
 .btn {
   --pc: var(--accent-dk);
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-  font-family: var(--font-pixel); font-weight: 600; font-size: 1.2rem; line-height: 1.1;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  padding: 0.8rem 1.3rem; cursor: pointer;
-  background: var(--accent); color: var(--accent-fg); text-decoration: none;
-  box-shadow: var(--edges), inset 0 -4px 0 rgba(0, 0, 0, 0.28), inset 0 4px 0 rgba(255, 255, 255, 0.28);
-  transition: transform 0.06s steps(2), filter 0.1s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+  padding: 0.55rem 1.25rem; margin: 0;
+  font-weight: 700; font-size: 1rem; line-height: 1.2; letter-spacing: 0.005em; text-transform: none;
+  text-decoration: none; white-space: nowrap;
+  background: var(--accent); color: var(--accent-fg);
+  box-shadow: 0 var(--lip) 0 0 var(--accent-dk);
 }
-.btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
-.btn:active { transform: translateY(2px); box-shadow: var(--edges), inset 0 4px 0 rgba(0, 0, 0, 0.25); }
-.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 calc(var(--lip) + 1px) 0 0 var(--accent-dk); }
+.btn:active { transform: translateY(var(--lip)); box-shadow: 0 0 0 0 var(--accent-dk); }
+.btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
 .btn-ghost {
   --pc: var(--edge);
   background: var(--card); color: var(--ink);
-  box-shadow: var(--edges), inset 0 -4px 0 rgba(0, 0, 0, 0.22), inset 0 4px 0 rgba(255, 255, 255, 0.07);
+  box-shadow: 0 var(--lip) 0 0 var(--shadow);
 }
-.btn-ghost:hover { --pc: var(--edge-hi); filter: none; }
-.btn-sm { font-size: 1.05rem; padding: 0.5rem 0.9rem; }
+.btn-ghost:hover { --pc: var(--edge-hi); background: var(--bg-soft); box-shadow: 0 calc(var(--lip) + 1px) 0 0 var(--shadow); }
+.btn-ghost:active { box-shadow: 0 0 0 0 var(--shadow); }
 
-/* pixel play-arrow in front of the label */
+/* Kept so existing markup still works: same size as .btn on purpose, so buttons never differ between pages */
+.btn-sm { min-height: var(--control-h); padding: 0.55rem 1.25rem; font-size: 1rem; }
+
+/* pixel play-arrow in front of the main action */
 .play::before, .arrow::before {
-  content: ''; flex: none; width: 0.65em; height: 0.8em; background: currentColor;
+  content: ''; flex: none; width: 0.6em; height: 0.75em; background: currentColor;
   clip-path: polygon(0 0, 33% 0, 33% 20%, 66% 20%, 66% 40%, 100% 40%, 100% 60%, 66% 60%, 66% 80%, 33% 80%, 33% 100%, 0 100%);
 }
 
 .icon-btn {
-  display: inline-grid; place-items: center; width: 42px; height: 42px; padding: 0;
-  background: var(--card); color: var(--ink); cursor: pointer;
+  --pc: var(--edge);
+  display: inline-grid; place-items: center; width: var(--control-h); padding: 0; margin: 0;
+  background: var(--card); color: var(--ink);
+  box-shadow: 0 var(--lip) 0 0 var(--shadow);
 }
-.icon-btn:hover { --pc: var(--edge-hi); }
+.icon-btn:hover { --pc: var(--edge-hi); background: var(--bg-soft); }
+.icon-btn:active { transform: translateY(var(--lip)); box-shadow: 0 0 0 0 var(--shadow); }
+.icon-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
-/* ----- Tags & filter chips ----- */
+/* ----- Tags (read-only) & filter chips (clickable) ----- */
 .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .tag {
-  font-family: var(--font-pixel); font-weight: 500; font-size: 1.05rem; line-height: 1.2;
-  padding: 0.25rem 0.65rem; background: var(--bg-soft); color: var(--ink);
+  --pc: color-mix(in srgb, var(--edge) 65%, transparent);
+  display: inline-block;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; line-height: 1.2;
+  padding: 0.3rem 0.65rem; border-radius: var(--r-sm); border-width: 1.5px;
+  background: var(--bg-soft); color: var(--ink);
 }
-.tag-live { background: var(--accent); color: var(--accent-fg); --pc: var(--accent-dk); animation: blink 1.4s steps(2) infinite; }
+.tag-live { background: var(--accent); color: var(--accent-fg); --pc: var(--accent-dk); }
 
 .chip {
-  font-family: var(--font-pixel); font-weight: 500; font-size: 1.1rem; line-height: 1.15;
-  padding: 0.4rem 0.8rem; cursor: pointer;
+  padding: 0.4rem 1rem; margin: 0;
+  font-weight: 600; font-size: 0.95rem; line-height: 1.2; min-height: 40px;
   background: var(--card); color: var(--muted);
 }
-.chip:hover { color: var(--ink); --pc: var(--edge-hi); }
+.chip:hover { color: var(--ink); --pc: var(--edge-hi); background: var(--bg-soft); }
 .chip.active { background: var(--accent); color: var(--accent-fg); --pc: var(--accent-dk); font-weight: 700; }
+
+/* Status pill (hero) */
+.pill {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin: 0 0 1.25rem;
+  padding: 0.35rem 1rem; border-radius: 999px;
+  font-family: var(--font-head); font-size: 0.95rem; font-weight: 600; line-height: 1.3;
+  color: var(--ink); background: var(--card);
+}
 
 /* ----- Form fields ----- */
 .field {
-  width: calc(100% - var(--px) * 2); font: inherit; font-size: 1.05rem; color: var(--ink);
-  background: var(--code-bg); padding: 0.7rem 0.9rem;
+  width: 100%; font: inherit; font-size: 1rem; color: var(--ink);
+  background: var(--code-bg); padding: 0.75rem 1rem; border-radius: var(--r);
 }
 .field:hover { --pc: var(--edge-hi); }
 .field:focus { outline: none; --pc: var(--accent); }

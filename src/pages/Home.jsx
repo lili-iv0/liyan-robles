@@ -68,7 +68,7 @@ export default function Home() {
         <SectionTitle
           kicker="Selected work"
           title="Featured projects"
-          action={<Link className="btn btn-ghost btn-sm" to="/projects">All projects</Link>}
+          action={<Link className="btn btn-ghost" to="/projects">All projects</Link>}
         >
           A few projects from coursework and personal work. Select one to see screenshots.
         </SectionTitle>
