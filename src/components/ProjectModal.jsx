@@ -6,6 +6,7 @@ export default function ProjectModal({ project, onClose }) {
   const { images, loading } = useProjectImages(project);
   const [i, setI] = useState(0);
   const [dir, setDir] = useState(1);
+  const [ratio, setRatio] = useState(null); // width / height of the image being shown
   const closeRef = useRef(null);
   const thumbsRef = useRef(null);
   const touchX = useRef(null);
@@ -79,6 +80,15 @@ export default function ProjectModal({ project, onClose }) {
 
   const current = images[i];
 
+  // Frame follows the picture's own shape (clamped so extreme panoramas / tall phone shots stay sensible).
+  // Videos and embeds stay 16:9.
+  const isPhoto = current && current.type !== 'video' && current.type !== 'embed';
+  const frameRatio = isPhoto && ratio ? Math.min(Math.max(ratio, 0.75), 2.4) : 16 / 9;
+  const onPhotoLoad = (e) => {
+    const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
+    if (w && h) setRatio(w / h);
+  };
+
   return (
     <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -86,8 +96,8 @@ export default function ProjectModal({ project, onClose }) {
           <span aria-hidden="true">✕</span>
         </button>
 
-        <div className="gallery">
-          <div className="gallery-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <div className={`gallery ${n > 1 ? 'has-thumbs' : ''}`}>
+          <div className="gallery-stage" style={{ aspectRatio: frameRatio }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
             {current?.type === 'video' && (
               <video
                 key={current.src}
@@ -116,6 +126,7 @@ export default function ProjectModal({ project, onClose }) {
                 key={current.src}
                 className={`gallery-img ${dir > 0 ? 'from-right' : 'from-left'}`}
                 src={current.src}
+                onLoad={onPhotoLoad}
                 alt={current.alt || `${title} screenshot ${i + 1}`}
               />
             )}
