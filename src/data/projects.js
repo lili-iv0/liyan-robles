@@ -7,7 +7,7 @@ import trackerImg from '../assets/tracker.jpeg';
 const projects = [
   {
     id: 'facility-reservation',
-    video: '', // optional: a YouTube / Vimeo link, or a direct .mp4 / .webm URL (shown first in the gallery)
+    video: '', 
     role: 'UI/UX | Full-stack Developer',
     details:
       'Booking portal for campus rooms and halls with admin approval, a weekly calendar, check-in tracking, and printable slips.',

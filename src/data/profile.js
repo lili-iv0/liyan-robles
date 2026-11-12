@@ -7,12 +7,9 @@ const profile = {
   email: 'leeann.robles1804@gmail.com',
   github: 'https://github.com/lili-iv0',
   linkedin: 'https://www.linkedin.com/in/liyan-robles',
-  resumeUrl: 'https://drive.google.com/file/d/1-pnlCx0JiIVkameS-Pa0Yj94L3PVJqVM/view?usp=sharing', // e.g. '/resume.pdf' (put the file in the /public folder). Leave empty to hide the button.
+  resumeUrl: 'https://drive.google.com/file/d/1tYHC3JudxMtKNYoZdvvdZXnO7qMf7QW5/view?usp=sharing',
 
-  // Contact form: paste your free Web3Forms access key (get it at web3forms.com, it is emailed to you).
-  // It is safe to keep in the code: it only lets people send messages to your inbox.
   web3formsKey: 'eeb81e9d-5832-44ca-b595-67a505fa05b8',
-  // Optional fallback if you leave the key empty: a Formspree id or full URL.
   formspreeId: 'https://formspree.io/f/xdeajdpe',
 
   stack: ['React', 'Javascript','Supabase'],
